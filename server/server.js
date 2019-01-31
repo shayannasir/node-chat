@@ -16,14 +16,16 @@ io.on('connection', socket => {
   console.log('new user connected');
 
   // socket.emit = Event generator
-  socket.emit('newMessage', {
-    from: 'Mike',
-    text: "Hey, What's going on?",
-    createdAt: 123
-  });
-
+  // socket.emit = emits to a single person
   socket.on('createMessage', message => {
     console.log('Message Created', message);
+
+    // io.emit = emits to every connection
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
   });
 
   // socket.on = Event Listener
