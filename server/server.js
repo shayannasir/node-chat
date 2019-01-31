@@ -18,7 +18,7 @@ io.on('connection', socket => {
 
   socket.emit(
     'newMessage',
-    generateMessage('Admin', 'Welcopme to the chat app')
+    generateMessage('Admin', 'Welcome to the chat app')
   );
 
   // socket.broadcast = emits to all except the generator
@@ -28,11 +28,11 @@ io.on('connection', socket => {
   );
 
   // socket.emit = Event generator, emits to a single person
-  socket.on('createMessage', message => {
+  socket.on('createMessage', (message, callback) => {
     console.log('Message Created', message);
-
     // io.emit = emits to every connection
     io.emit('newMessage', generateMessage(message.from, message.text));
+    callback('This is from the server');
   });
 
   // socket.on = Event Listener
