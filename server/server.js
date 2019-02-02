@@ -17,12 +17,14 @@ var users = new Users();
 app.use(express.static(publicPath));
 
 io.on('connection', socket => {
-  console.log('new user connected');
-
   socket.on('join', (params, callback) => {
     if (!isRealString(params.name) || !isRealString(params.room)) {
       return callback('Name and room name are required.');
     }
+    if (users.getUserList(params.room).indexOf(params.name) > -1) {
+      return callback('Username already taken.');
+    }
+    console.log('New User connected');
 
     socket.join(params.room);
     users.removeUser(socket.id);
@@ -79,6 +81,7 @@ io.on('connection', socket => {
         generateMessage('Admin', `${user.name} has left.`)
       );
     }
+    console.log('User disconnected');
   });
 });
 
