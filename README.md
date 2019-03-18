@@ -1,6 +1,6 @@
 # node-chat
 
-This is chat application with the following features:
+This is a chat application with the following features:
 
 - separate chatrooms
 - sharing geolocation
